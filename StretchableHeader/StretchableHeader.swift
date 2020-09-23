@@ -9,24 +9,23 @@ import SwiftUI
 
 struct MenuItem: Identifiable
 {
-    var id = UUID()
-    var name: String
-    var description: String
-    var image: String
+    let id = UUID()
+    let name: String
+    let description: String
+    let image: String
 }
 
 struct MenuRepository
 {
-    var data:[MenuItem]
+    let data:[MenuItem]
   
     init()
     {
         var items = [MenuItem]()
       
-        for _ in 1...20
+        for i in 1...20
         {
-            items.append(MenuItem(name: "Dish", description: "Description", image: "dish1"))
-            //items.append(MenuItem(name: "Dish", description: "Description", image: "dish\(i % 2)"))
+            items.append(MenuItem(name: "Dish", description: "Description", image: "dish\(i % 2)"))
         }
       
         data = items
@@ -41,7 +40,7 @@ struct Menu: View
     {
         ScrollView(.vertical, showsIndicators: false, content:
         {
-            StretchableHeader()
+            StretchableHeader(image: Image("header"))
             
             LazyVStack(spacing: 8)
             {
@@ -60,7 +59,7 @@ struct Menu: View
 
 struct StretchableHeader: View
 {
-    var imageName: String = "header"
+    var image: Image
     var initialHeaderHeight: CGFloat = UIScreen.main.bounds.height * 0.25
     
     var body: some View
@@ -69,7 +68,7 @@ struct StretchableHeader: View
 
             let minY = geometry.frame(in: .global).minY
 
-            Image(imageName)
+            image
                 .resizable()
                 .offset(y: minY > 0 ? -minY : 0)
                 .frame(height: minY > 0 ? initialHeaderHeight + minY : initialHeaderHeight)
